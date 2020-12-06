@@ -18,15 +18,14 @@
 ## Contents
 
 1. CNN basic
-2. AlexNet
-3. VGGNet
-4. GoogleNet
-5. ResNet
-6. FCN (Fully Convolutional Network)
-7. R-CNN
-8.  Fast R-CNN
+2. [AlexNet](note/02_AlexNet.md)
+3. [VGGNet](note/03_VGGNet.md)
+4. [GoogleNet](note/04_GoogleNet.md)
+5. [ResNet](note/05_ResNet.md)
+6. [Semantic Segmentation](note/06_Semantic_Segmentation.md)
+7. [Classification & Localization](note/07_Classification_Localization.md)
+8. [Object Detection](note/08_Object_Detection.md)
 9.  Faster R-CNN
 10. YOLO
 11. SSD
 12. Mask R-CNN
-
