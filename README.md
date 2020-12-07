@@ -25,6 +25,8 @@
 6. [Semantic Segmentation](note/06_Semantic_Segmentation.md)
 7. [Classification & Localization](note/07_Classification_Localization.md)
 8. [Object Detection](note/08_Object_Detection.md)
+   1. [R-CNN, Fast R-CNN, Faster R-CNN](note/08_Object_Detection(R-CNN_all).md)
+   2. [YOLO](note/08_Object_Detection(YOLO).md)
 9.  Faster R-CNN
 10. YOLO
 11. SSD

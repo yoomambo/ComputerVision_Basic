@@ -15,6 +15,8 @@ _**DeepLearning**_ 이 Object Detection에 적용된 이후로 성능은 급증�
 
 앞으로 이렇게 4가지에 대해 알아볼 것이다.
 
+----------
+
 ## 2. Concept
 
 <img src="../image/08/many_output.PNG">
@@ -39,13 +41,23 @@ ex) Selective Search는 superpixel segmentation method를 사용한다. 이 sele
 
 --------------
 
-#### superpixel
+## cf)
+
+#### 1. IOU (Integrate of Union)
+
+<img src="../image/08/IOU.PNG" width=40%>
+
+<img src="../image/08/IOU2.PNG" width=55%>
+
+IOU는 Overlap의 넓이와 Union의 넓이는 나눈 갑으로, True 값에 Overlap이 많을수록 Object Detection을 잘했다는 기준이다.
+
+#### 2. Superpixel
 
 > 자신의 pixel과 비슷한 group (color, distance)끼리 묶는 것을 말한다.
 
 superpixel은 조절가능하고 inregular한 shape이므로 Graph Neural Network와 잘맞는다.
 
-#### Selective Search (중요한 개념)
+#### 3. Selective Search (중요한 개념)
 
 1. sub-segmentation
 
@@ -64,3 +76,10 @@ superpixel은 조절가능하고 inregular한 shape이므로 Graph Neural Networ
 3. 통합된 영역들을 바탕으로 candidate region을 도출해낸다.
 
 <img src="../image/08/SS_output.PNG">
+
+--------
+
+## Reference
+
+1. [How to calculate Object Detection's Performance : IOU, Precision, Recall, FP/TP, FPS](https://hoya012.github.io/blog/Tutorials-of-Object-Detection-Using-Deep-Learning-how-to-measure-performance-of-object-detection/)
+2. [Selective Search](https://m.blog.naver.com/laonple/220930954658)

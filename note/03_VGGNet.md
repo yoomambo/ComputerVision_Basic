@@ -51,3 +51,10 @@ receptive field는 7X7로 동일하다고 가정하였을 때,
 
 1. Layer를 여러개를 쌓아서 non-linearty function을 여러번 쌓는다. 따라서 모델을 딥하게 쌓았으므로 표현력이 다른 architecture 보다 좋아졌다.
 2. parameter의 갯수가 현저히 줄었다. 같은 성능을 내는 모델도 훨씬 적은 갯수로 훈련이 가능하였다.
+
+----------
+
+## Reference
+
+1. [VGGNet code 및 architecture 영어설명](https://www.programmersought.com/article/6413685268/)
+2. [VGGNet Architecture 한글설명](http://aikorea.org/cs231n/convolutional-networks/)

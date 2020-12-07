@@ -101,3 +101,9 @@ _**global average pooling을 사용하면 가중치가 단 한개도 필요하�
 1. param의 갯수를 크게 줄였다.
 2. gradient vanish 문제 해결
 3. 22 layer
+
+---------------
+
+## Reference
+
+1. [GoogleNet architecture](https://bskyvision.com/539)

@@ -11,15 +11,26 @@ ComputerVision은 크게 4가지 틀로 구성된다.
 
 먼저 Semantic Segmenatation 에 대해서 공부해보자.
 
-## 1. Concept
+-----------
+
+## Background
 
 <img src="../image/06/semantic_segmentation_concept.PNG">
 
 Semantic Segmentation은 직역하면 의미론적 구분이다. 우리가 computer vision을 하는 목표 중 하나가 이 물체가 어디까지 해당되는지, 즉, 의미론적으로 어디까지가 같은 물체안에 속하는지가 궁금하다.
 
-이러한 문제점들은 instance를 알지 못하면 정확하게 알지 못한다. 하지만, 
+이러한 문제점들은 instance를 알지 못하면 정확하게 알지 못한다. 하지만, 이를 UpSampling 기법으로 해결하였다.
 
-> **instance를 구별하는 것이 아니라, pixel만 다뤄서 해결할 수 있다.**
+> **즉, instance를 구별하는 것이 아니라, pixel만 다뤄서 해결할 수 있다.**
+
+--------------
+
+## 1. Concept
+
+- **영향력**: 인용 횟수가 약 14000회에 달하며, 다른 컴퓨터 비젼 분야의 접근들에게도 많은 영향을 주었습니다.
+
+- **주요 기여**: 1x1 컨볼루션을 사용하여 입력 크기에 상관없이 클래시피케이션을 수행할 수 있는 기법 제시 
+
 ----------
 
 ## 2. 현재까지의 문제점
@@ -110,3 +121,9 @@ stride가 2이기 때문에, $x^T*a$은 $a$ 길이가 2에서 6으로 증가하�
 
 1. 기존 CNN 방법으로는 너무나 많은 Computation 이 필요했었다.
 2. Encoder-Decoder 구조와 stride 2이상으로 하는 filter를 접목하였더니 spartial resolution이 증가하는 현상이 보였다.
+
+--------
+
+## Reference
+
+1. [Semantic Segmentation](https://yeomko.tistory.com/18)
