@@ -27,7 +27,5 @@
 8. [Object Detection](note/08_Object_Detection.md)
    1. [R-CNN, Fast R-CNN, Faster R-CNN](note/08_Object_Detection(R-CNN_all).md)
    2. [YOLO](note/08_Object_Detection(YOLO).md)
-9.  Faster R-CNN
-10. YOLO
-11. SSD
-12. Mask R-CNN
+   3. [Mask R-CNN](note/08_instance_segmentation.md)
+9. [Generative Adversarial Networks (GAN)](note/09_GAN.md)

@@ -16,7 +16,8 @@
 <img src="../image/03/AlexNet_VGGNet.PNG">
 
 1. filter을 좀 더 smaller한 filter를 적용하였다.
-2. AlexNet은 8개의 layer를 쌓고, VGGNet은 16-19 layer를 쌓는다. 
+2. AlexNet은 8개의 layer를 쌓고, VGGNet은 16-19 layer를 쌓는다.
+3. Data Augmentation 적용 
 
 --------
 
