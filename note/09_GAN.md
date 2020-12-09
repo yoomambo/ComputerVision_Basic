@@ -6,8 +6,8 @@
 
 기본적인 concept은 Discriminative Model 과 Generative Model을 같이 경쟁적으로 훈련시켜서 Discriminative Model이 Fake Image를 구별하지 못하도록 하는 것이 Concept 이다.
 
-- **영향력** : 
-- **주요 기여** : 
+- **영향력** : 컴퓨터비젼에 새로운 신드롬을 불고 일어났다.
+- **주요 기여** : generative model의 중요성
 
 --------------
 
@@ -59,21 +59,33 @@ _**Zmap을 이용해서 Generator Network가 fake X의 Distribution을 만들어
 $$min_{\theta g} max_{\theta d} [E_{x \sim data}(\log{D_{\theta d} (x))} + E_{z \sim p(z)}(1 - \log{D_{\theta d} (G_{\theta g}(z)))}]$$
 
 - $\theta_d$ : Discriminative
-  - x가 real일 때 : $\log{D_{\theta d}(x)}$ : Max
-  - x가 Fake일 때 : $1 - \log{D_{\theta d} (G_{\theta g}(z))}$ : Min
+  - x가 real일 때 : Loss = $\log{D_{\theta d}(x)}$ --> Max
+  - x가 Fake일 때 : Loss = $1 - \log{D_{\theta d} (G_{\theta g}(z))}$ --> Min
 - $\theta_g$ : Generative
-  - x가 Fake일 때 : $1 - \log{D_{\theta d} (G_{\theta g}(z))}$ : min
--  $G_{\theta g}(z)$ 에서 z는 Generative model의 latent vector, $D_{\theta d}(G_{\theta g}(z))$ 는 $G_{\theta g}(z)$가 real에 가까울수록 $D_{\theta d}(G_{\theta g}(z)) \approx 1$. **즉, Discriminative가 real이라고 판단하게끔 하는것이 목표다.** 따라서 $1 - \log{D_{\theta d} (G_{\theta g}(z))}$ 을 1~무한대 사이 1로 수렴하게 하는것이 필요하다.
+  - x가 Fake일 때 : $1 - \log{D_{\theta d} (G_{\theta g}(z))}$ --> min
+-  $G_{\theta g}(z)$ 에서 z는 Generative model의 latent vector, $D_{\theta d}(G_{\theta g}(z))$ 는 $G_{\theta g}(z)$가 real에 가까울수록 $D_{\theta d}(G_{\theta g}(z)) \approx 1$. **즉, Discriminative가 real이라고 판단하게끔 하는것이 목표다.** 따라서 $1 - \log{D_{\theta d} (G_{\theta g}(z))}$ 을 1~무한대 사잇값에서 _**1로 수렴하게 하는것이 필요하다.**_
 
 --------------
 
 ## 5. Gradient Problem
 
+### 5-1. Loss Function
+
 <img src="../image/10/GAN_gradient.PNG" width=70%>
 
 $1 - \log{D_{\theta d} (G_{\theta g}(z))}$ 을 minimum으로 하려고 보니, $D_{\theta d} (G_{\theta g}(z))$는 처음에 fake data 쪽에 가까우니 0부터 시작할 것이고, 그래프를 보면 기울기가 완만하다가 급해진다. 이는 training 속도에 저하가 될 것이라고 판단 가능하다.
 
-_**따라서 $\log{D_{\theta d} (G_{\theta g}(z))}$ 을 max로 찾게된다면 $1 - \log{D_{\theta d} (G_{\theta g}(z))}$ 을 min으로 하는 비슷한 효과를 불러오며 training boost가 가능하다.**_
+_**따라서 $\log{D_{\theta d} (G_{\theta g}(z))}$ 을 max로 찾게 된다면 $1 - \log{D_{\theta d} (G_{\theta g}(z))}$ 을 min으로 하는 비슷한 효과를 불러오며 training boost가 가능하다.**_
+
+### 5-2. Saddle Point
+
+<img src="../image/10/saddle.png">
+
+Loss Function을 살펴보면 **Geneartive model**은 loss function은 **minimize** 해야하고, **Discriminative model**은 loss function을 **maximize** 해야한다. (여기서 loss function은 오차가 아니라 정확도를 말한다.) 따라서 위와 같은 saddle point를 가지는 그래프가 나온다. 
+
+> **GAN의 단점이 optimize 하기가 매우 어렵다.**
+
+정말 하나의 architecture을 optimize하는 것 자체가 논문거리가 될 정도이니 말이다.
 
 --------------
 
@@ -83,17 +95,17 @@ _**따라서 $\log{D_{\theta d} (G_{\theta g}(z))}$ 을 max로 찾게된다면 $
 
 <img src="../image/10/GAN_training_procedure.PNG">
 
-1. random noise는 uniform하게 Generative model에 넣어준다
+1. random noise는 uniform하게 Generative model에 넣어준다. 이 때 Generative Model은 **Neural Network**로 구성되어있다.
 2. Discriminator는 $D^*(x) = \frac{P_{data}(x)}{P_{data}(x) + P_{g}(x)}$ 이다. 이 의미는 real data일 확률인지, generative model이 만들어낸 data일 확률인지 판단하는 척도이다.
 3. Discriminator의 feedback으로 점점 generative model이 real model과 비슷하게 학습해나간다.
 4. 만약 discriminator가 real data와 같아진다면 종료한다. 이 때 $D^*(x) = \frac{P_{data}(x)}{P_{data}(x) + P_{g}(x)}$ 는 real data일 확률과 Generative model의 data일 확률이 같은 지점, 즉 Discriminator가 구분하지 못하는 지점이므로 종료한다.
 
 ### 6-2. Neural Network 관점
 
-1. z sampling
+1. $z$ sampling
 2. Generative model : $G(z)$ --> $X'$
-3. Discriminative model : $D(X')$
-4. Sigmoid($D(X')$) --> True or False using Cross Entropy Error
+3. Discriminative model : $D(G(z)) = D(X')$
+4. Sigmoid($D(X')$) --> 1 or 0 using Cross Entropy Error
 
 --------------
 
@@ -128,11 +140,11 @@ _**따라서 $\log{D_{\theta d} (G_{\theta g}(z))}$ 을 max로 찾게된다면 $
 
 이 때 이 새로운 vector들을 random noise를 주어 image를 생성했을 때, 실제로 웃고 있는 남자의 사진이 나왔다.
 
-_**즉, latent vector 안에 각각의 image들의 여러가지 성분들이 존재하고 이를 연산으로 확인하였다.**_
+_**즉, latent vector 안에 각각의 image들의 여러가지 성분 (눈, 코, 입, 표정, 얼굴 색 등)들이 존재하고 이를 연산으로 확인할 수 있다.**_
 
 --------------
 
-## 8. Applications
+## 8. Applications (추후에 review)
 
 <img src="../image/10/GAN_ZOO.PNG">
 
@@ -177,9 +189,11 @@ _**즉, latent vector 안에 각각의 image들의 여러가지 성분들이 존
 
 GAN을 학습하는 것은 대단히 어려운 일이다. Loss Function 자체가 Saddle Point 이기도 하고, Generator와 Discriminator 사이 학습속도도 서로 맞춰야한다.
 
+> 따라서 generative model을 만드는 것은 어려운 일이며, _**기존에 만들어진 pre trained model을 우리가 원하는 data에 맞게 재사용하면 어떨까?**_ 라는 질문에서 출발한 것이 **GAN inversion**이다.
+
 <img src="../image/10/GAN_inversion.PNG">
 
-> 실제 real image를 통해서 Z space로 근사시켜 Z'을 만들고 이 real image에 맞게 변형된 Z'을 이용하여 새로운 image를 만들 수 있다. 는 것이 이 논문의 핵심이다.
+> _**실제 real image를 통해서 Z space로 근사시켜 Z'을 만들고 이 real image에 맞게 변형된 Z'을 이용하여 새로운 image를 만들 수 있다.**_ 는 것이 이 논문의 핵심이다.
 
 <img src="../image/10/GAN_inversion2.PNG">
 
