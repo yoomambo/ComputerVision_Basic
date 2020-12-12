@@ -15,3 +15,16 @@
 1. 고양이를 구분하는 방법은 Classification 이다.
 2. 고양이를 구분하는 box를 그리는 방법은 regression 이다.
 
+------------
+
+## 2. Application
+
+<img src="../image/07/tennis.PNG">
+
+<img src="../image/07/tennis_2.PNG">
+
+------------
+
+## Reference
+
+1. [Classfication & Localization](https://leechamin.tistory.com/112)

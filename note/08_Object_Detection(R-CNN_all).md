@@ -31,10 +31,10 @@
 <img src="../image/08/procedure_3_extract_features.PNG">
 
 1. Selective Search를 ROI(regions of interest)를 통해 region proposal한 부분들을 가지고 온다.
-2. 각 지역을 CNN input size에 맞게 Crop&Warp를 한다.
-3. CNN을 통과시켜서 feature를 disk에 저장
+2. 각 지역을 CNN input size에 맞게 Crop & Warp를 한다.
+3. CNN을 통과시켜서 Crop & Warp를 거친 data들을 하나씩 feature를 뽑아서 feature를 disk에 저장
 
-#### 4) Train binary SVM per class to classify features
+#### 4) Train binary SVM per class → classify features
 
 <img src="../image/08/procedure_4_binary_classification.PNG">
 
@@ -52,15 +52,14 @@ cached한 region feature들을 class에 대해 positive sample인지 negative sa
 
 ### 1. R-CNN의 문제점
 
-1. ROI들을 모두 저장하기 때문에 각 ROI에 맞는 CNN parameter들을 모두 저장하고 있어야한다. -> storage huge
-2. 처음 ImageNet을 training할 때 필요한 Softmax Classfier, SVM, Box Regressor들을 모두 따로 훈련한다. -> computation expensive
-3. training 시간이 84h로 굉장히 오래걸린다.
-4. detection도 오래걸린다.
+1. ROI들을 모두 저장하기 때문에 각 ROI에 맞는 CNN parameter들을 모두 저장하고 있어야한다. -> _**storage huge**_
+2. 처음 ImageNet을 training할 때 필요한 Softmax Classfier, SVM, Box Regressor들을 모두 따로 훈련한다. -> _**computation expensive**_
+3. _**training 시간이 84h**_ 로 굉장히 오래걸린다.
+4. _**detection도 오래걸린다.**_
 
 ### 2. Concept
 
-- **영향력** : 
-- **주요 기여** : 각 ROI를 모두 feature들을 뽑아 저장한 것이 아니라 기본 image 상에서 ROI를 투영시켜 feature들을 저장하지 않아도 됬다는 점이 성능에 확실한 기여를 하였다.
+- **주요 기여** : 각 ROI를 모두 feature들을 뽑아 저장한 것이 아니라 _**기본 image 상에서 activation map에 ROI를 directly 투영시켜**_ feature들을 저장하지 않아도 됬다는 점이 성능에 확실한 기여를 하였다.
 
 ### 3. Fast R-CNN Architecture
 
@@ -92,23 +91,25 @@ cached한 region feature들을 class에 대해 positive sample인지 negative sa
 
 ## Faster R-CNN
 
-<img src="../image/08/Faster_R-CNN_architecture.PNG">
+<img src="../image/08/Faster_R-CNN_architecture.png">
 
-R-CNN, Fast R-CNN 모두 ROI (Region of Interest)를 selective search를 통해 미리 뽑아놔야한다.
+Fast R-CNN이 Selective Search로 뽑은 ROI를 기존 image에 projected 한 것이 아니라, CNN으로 뽑아낸 activation map에 ROI를 directly projected 하여 Crop & Warp한 data의 feature들을 모두 disk 에 저장하는 문제를 해결하였다.
+
+하지만 _**기존 R-CNN, Fast R-CNN 모두 ROI (Region of Interest)를 selective search를 통해 미리 뽑아놔야한다.**_
 
 ### 1. Concept
 
 - 영향력: SPPNet의 Kaming He와 R-CNN 창시자인 Ross가 각각 2저자 3저자로 참여했으며, 인용 횟수는 무려... 무려 15000회에 달한다.
-- 주요 기여: Faster R-CNN은 애초에 pre-defined 된 ROI을 뽑는 것을 Neural Network로 한 번에 뽑아보자! 라는 것이 핵심이다. 진정한 의미의 end-to-end object detection 모델을 제시하였다.
+- 주요 기여: Faster R-CNN은 애초에 pre-defined 된 ROI을 뽑는 것을 Neural Network로 한 번에 뽑아보자! 라는 것이 핵심이다. _**진정한 의미의 end-to-end object detection 모델을 제시하였다.**_
 - 결과: 모든 단계를 다 합쳐서 5fps 라는 빠른 속도를 내며 Pascal VOC를 기준으로 78.8% 라는 성능을 낸다. 
 
 ### 2. Architecture
 
-<img src="../image/08/Faster_R-CNN_architecture2.PNG">
+<img src="../image/08/Faster_R-CNN_architecture2.png">
 
 논문에는 이 figure가 나와있으나 이해하기 어렵다. 아래의 그림으로 대신 설명하겠다.
 
-<img src="../image/08/Faster_R-CNN_architecture3.PNG">
+<img src="../image/08/Faster_R-CNN_architecture3.png">
 
 1. Faster R-CNN 에서는 Conv를 거쳐서 feature map을 미리 뽑아둔다.
 2. 3x3xC conv를 거쳐서 channel을 256, or 512을 거친다.
@@ -119,8 +120,6 @@ R-CNN, Fast R-CNN 모두 ROI (Region of Interest)를 selective search를 통해 
 5. 먼저 Classification을 통해서 얻은 물체일 확률 값들을 정렬한 다음, 높은 순으로 K개의 앵커만 추려낸다. 그 다음 K개의 앵커들에 각각 Bounding box regression을 적용해준다. 그 다음 Non-Maximum-Suppression을 적용하여 RoI을 구해준다.
 
 #### 2-1. Non-Maximum Suppression
-
-#### Code
 
 ```python
 def nms(boxes, probs, threshold):
@@ -144,20 +143,18 @@ def nms(boxes, probs, threshold):
       if ov > threshold:
         keep[order[j+i+1]] = False
   return keep
-
-출처: https://dyndy.tistory.com/275 [DY N DY]
 ```
 
-1. 같은 클래스에 대해 높은-낮은 confidence 순서로 정렬한다. (line 13)
+1. 같은 class에 대해 높은-낮은 confidence 순서로 정렬한다. (line 13)
 2. 가장 confidence가 높은 boundingbox와 IOU가 일정 이상인 boundingbox는 동일한 물체를 detect했다고 판단하여 지운다.(16~20) 보통 50%(0.5)이상인 경우 지우는 경우를 종종 보았다.
 
 ----------
 
 ## R-CNN vs SPP vs Fast R-CNN
 
-<img src="../image/08/performance2.PNG">
+<img src="../image/08/performance2.PNG" width=80%>
 
-실제로 Faster R-CNN은 Speed 측면이나
+실제로 Faster R-CNN은 Speed 측면에서 월등히 좋은 것으로 나타났고, 정확도 또한 개선된 것을 보여주었다.
 
 ---------------
 

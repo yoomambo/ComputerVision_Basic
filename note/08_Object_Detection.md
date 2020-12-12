@@ -2,6 +2,8 @@
 
 <img src="../image/08/trend.PNG" width=80%>
 
+------
+
 ## 1. Object Detection's performance
 
 <img src="../image/08/impact_of_DL.PNG" width=80%>
@@ -43,7 +45,7 @@ ex) Selective Search는 superpixel segmentation method를 사용한다. 이 sele
 
 ## cf)
 
-#### 1. IOU (Integrate of Union)
+### 1. IOU (Integrate of Union)
 
 <img src="../image/08/IOU.PNG" width=40%>
 
@@ -51,29 +53,29 @@ ex) Selective Search는 superpixel segmentation method를 사용한다. 이 sele
 
 IOU는 Overlap의 넓이와 Union의 넓이는 나눈 갑으로, True 값에 Overlap이 많을수록 Object Detection을 잘했다는 기준이다.
 
-#### 2. Superpixel
+### 2. Superpixel
 
 > 자신의 pixel과 비슷한 group (color, distance)끼리 묶는 것을 말한다.
 
 superpixel은 조절가능하고 inregular한 shape이므로 Graph Neural Network와 잘맞는다.
 
-#### 3. Selective Search (중요한 개념)
+### 3. Selective Search (중요한 개념)
 
-1. sub-segmentation
+#### 1) sub-segmentation
 
 <img src="../image/08/SS_1.PNG">
 
 각각의 객체라고 판단하는 작업을 먼저 진행한다. 그 후 candidate object들을 만든다.
 
-2. integrate small one first 
+#### 2) integrate small one first 
 
 <img src="../image/08/SS_2.PNG">
 
-이 때는 greedy 알고리즘을 적용, 여러 영역들을 비교해서 가장 비슷한 영역을 고르고 이것들을 좀 더 큰 영역으로 통합하면서 object를 줄이는 작업이다.
+이 때는 greedy 알고리즘을 적용, 여러 영역들을 비교해서 가장 비슷한 영역을 고르고 이것들을 좀 더 큰 영역으로 통합하면서 object를 줄이는 작업이다. (SuperPixel을 여기서 쓸 것이다. 같은 그룹끼리 묶기)
 
 아래 그림은 그 예를 보여주며, 초기에 작고 복잡했던 영역들이 **유사도**에 따라 점점 통합된다.
 
-3. 통합된 영역들을 바탕으로 candidate region을 도출해낸다.
+#### 3) 통합된 영역들을 바탕으로 candidate region을 도출해낸다.
 
 <img src="../image/08/SS_output.PNG">
 

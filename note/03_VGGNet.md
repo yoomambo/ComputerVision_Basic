@@ -1,6 +1,18 @@
 # VGGNet
 
-## VGGNet Architecture
+--------
+
+## 1. Concept
+
+> _**Small Filter & Deeper Networks**_
+
+<img src="../image/03/AlexNet_VGGNet.PNG">
+
+1. _**filter을 좀 더 smaller한 filter를 적용하였다.**_ : 7 * 7 → 3 * 3
+2. AlexNet은 8개의 layer를 쌓고, _**VGGNet은 16-19 layer를 쌓는다.**_ : Model이 Deep Learning이라는 수식이 붙을 정도로 깊어졌다.
+3. _**Data Augmentation 적용**_ : Deep Learning의 단점 중 데이터가 적으면 성능이 안나오는 부분을 보완
+
+### 1-1. Architecture
 
 <img src="../image/03/VGGNet_architecture.PNG">
 
@@ -9,23 +21,11 @@
 
 --------
 
-## 1. Concept
-
-    Small Filter & Deeper Networks
-
-<img src="../image/03/AlexNet_VGGNet.PNG">
-
-1. filter을 좀 더 smaller한 filter를 적용하였다.
-2. AlexNet은 8개의 layer를 쌓고, VGGNet은 16-19 layer를 쌓는다.
-3. Data Augmentation 적용 
-
---------
-
 ## 2. Receptive Field
 
 <img src="../image/03/receptive_field.PNG">
 
-> 하나의 output을 만들기 위해 주변 pixel들이 몇 개정도 영향을 주는가?
+> _**하나의 output을 만들기 위해 주변 pixel들이 몇 개정도 영향을 주는가?**_
 
 위의 그림을 보면 9X9의 그림을 2개의 layer를 거쳐서 하나의 output으로 만드는 작업을 하기 위해서는 filter를 어떤 크기로 가져야할까? 에 대한 질문에 답을 하는 것이 receptive field라고 보면 된다.
 
@@ -42,9 +42,9 @@ receptive field는 7X7로 동일하다고 가정하였을 때,
 
 이 질문에 VGGNet의 핵심이 들어가있다.
 
-3X3 layer를 3번 쌓았을 때 parameter의 갯수는 filter의 갯수 (3X3XC), 3 layer의 3, 같은 포인트를 찍는 output의 갯수는 channel의 깊이,C를 합해서 $27C^2$
+3X3 layer를 3번 쌓았을 때 parameter의 갯수는 filter의 갯수 (3 X 3 X C), 3 layer의 3, 같은 포인트를 찍는 output의 갯수는 channel의 깊이,C를 곱해서 $27C^2$
 
-7X7 layer를 1번 쌓았을 때 parameter의 갯수는 filter의 갯수 (7x7xC), 같은 포인트를 찍는 output의 갯수 c,를 합해서 $49^2$ 개 이다.
+7X7 layer를 1번 쌓았을 때 parameter의 갯수는 filter의 갯수 (7 x 7 x C), 같은 포인트를 찍는 output의 갯수 channel의 깊이 c,를 곱해서 $49C^2$ 개 이다.
 
 --------
 

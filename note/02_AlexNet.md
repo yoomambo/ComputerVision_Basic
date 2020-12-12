@@ -25,7 +25,7 @@ LeNet의 경우는 실제로 Convolutional Neural Network를 적용한 사례이
 
 - input : 227 * 227 * 3
 - Filter : window : 11*11 // channel : 96
-- output : 55*55*96
+- output : 55 * 55 * 96
 - parameter : 11 * 11 * 86 = 35K
 - bias : 96
 
