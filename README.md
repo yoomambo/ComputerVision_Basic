@@ -43,6 +43,7 @@ So I want to summary this class in my github repository due to memorize my lectu
    2. [YOLO](note/08_Object_Detection(YOLO).md)
    3. [Mask R-CNN](note/08_Object_Detection_instance_segmentation.md)
 9. [Generative Adversarial Networks (GAN)](note/09_GAN.md)
+10. [Representation Learning.md](note/10_Representation_Learning.md)
 
 ------
 
@@ -53,3 +54,7 @@ So I want to summary this class in my github repository due to memorize my lectu
 - [ ] [Deconvoultional Network](note/06_Semantic_Segmentation.md)
 - [ ] [Classification & Localization : 자세히 들여다보기](note/07_Classification_Localization.md)
 - [ ] [YOLO Network Design Review](note/08_Object_Detection(YOLO).md)
+- [ ] [BigGAN](note/09_GAN.md)
+- [ ] [Explosion of GAN](note/09_GAN.md)
+- [ ] [Scene Graphs to GAN](note/09_GAN.md)
+- [ ] [Represenataion Learning 전체](note/10_Representation_Learning.md)
