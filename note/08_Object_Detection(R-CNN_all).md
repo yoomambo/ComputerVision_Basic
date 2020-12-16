@@ -31,7 +31,7 @@
 <img src="../image/08/procedure_3_extract_features.PNG">
 
 1. Selective Search를 ROI(regions of interest)를 통해 region proposal한 부분들을 가지고 온다.
-2. 각 지역을 CNN input size에 맞게 Crop & Warp를 한다.
+2. 각 지역을 미리 trained 되어있는 CNN에 input size을 맞게 Crop & Warp를 한다.
 3. CNN을 통과시켜서 Crop & Warp를 거친 data들을 하나씩 feature를 뽑아서 feature를 disk에 저장
 
 #### 4) Train binary SVM per class → classify features
@@ -111,13 +111,15 @@ Fast R-CNN이 Selective Search로 뽑은 ROI를 기존 image에 projected 한 �
 
 <img src="../image/08/Faster_R-CNN_architecture3.png">
 
-1. Faster R-CNN 에서는 Conv를 거쳐서 feature map을 미리 뽑아둔다.
-2. 3x3xC conv를 거쳐서 channel을 256, or 512을 거친다.
-3. 각각 1x1xCx(2x9), 1x1xCx(4x9) 을 거친다. 
-   1. 1x1xC conv layer를 쓴 이유(Fully Connected Layer)는 입력 이미지의 크기에 상관없이 동작할 수 있도록 하기 위함이다. 
-   2. 2는 object인지 아닌지 binary classification, 4는 box regression을 표현하는 (x,y,w,h). 9는 k-anchor를 말한다.
-4. _**1번의 1x1 컨볼루션으로 H x W 개의 앵커 좌표들에 대한 예측을 모두 수행한 것이다.**_ 이제 이 값들을 적절히 reshape 해준 다음 Softmax를 적용하여 해당 앵커가 오브젝트일 확률 값을 얻눈다.
-5. 먼저 Classification을 통해서 얻은 물체일 확률 값들을 정렬한 다음, 높은 순으로 K개의 앵커만 추려낸다. 그 다음 K개의 앵커들에 각각 Bounding box regression을 적용해준다. 그 다음 Non-Maximum-Suppression을 적용하여 RoI을 구해준다.
+1. K개를 정해주면 k-anchor를 random하게 만들어본다.
+2. Faster R-CNN 에서는 Conv를 거쳐서 feature map을 미리 뽑아둔다.
+3. 3x3xC conv를 거쳐서 channel을 256, or 512을 거친다.
+4. 각각 1x1x256 or 512x(2x9), 1x1x256 or 512x(4x9) 을 거친다. 
+   1. 9는 k-anchor를 말한다.
+   2. 1x1xC conv layer를 쓴 이유(Fully Connected Layer)는 입력 이미지의 크기에 상관없이 동작할 수 있도록 하기 위함이다. 
+   3. 2는 object인지 아닌지 binary classification, 4는 box regression을 표현하는 (x,y,w,h).
+5. _**1번의 1x1 컨볼루션으로 H x W 개의 앵커 좌표들에 대한 예측을 모두 수행한 것이다.**_ 이제 이 값들을 적절히 reshape 해준 다음 Softmax를 적용하여 해당 앵커가 오브젝트일 확률 값을 얻눈다.
+6. 먼저 Classification을 통해서 얻은 물체일 확률 값들을 정렬한 다음, 높은 순으로 K개의 앵커만 추려낸다. 그 다음 K개의 앵커들에 각각 Bounding box regression을 적용해준다. 그 다음 Non-Maximum-Suppression을 적용하여 RoI을 구해준다.
 
 #### 2-1. Non-Maximum Suppression
 
@@ -147,6 +149,7 @@ def nms(boxes, probs, threshold):
 
 1. 같은 class에 대해 높은-낮은 confidence 순서로 정렬한다. (line 13)
 2. 가장 confidence가 높은 boundingbox와 IOU가 일정 이상인 boundingbox는 동일한 물체를 detect했다고 판단하여 지운다.(16~20) 보통 50%(0.5)이상인 경우 지우는 경우를 종종 보았다.
+3. _**NMS를 하려는 가장 큰 이유는 역시 중복제거이기 때문에, 예측한 박스들 중 IOU가 일정 이상인 것들에 대해서 수행하게 된다.**_
 
 ----------
 

@@ -10,7 +10,7 @@
 
 Generative Model은 Training 과정에서는 $P(X)$ or $P(X,Y)$를 학습하고, Test 과정에서는 3가지가 존재한다.
 1. seed를 input → X 를 예측 (그냥 만들기만)
-2. seed와 특정 ㅛ값에 해당하는 → X 를 예측 (ㅛ값에 해당하는 X를 예측)
+2. seed와 특정 Y값에 해당하는 → X 를 예측 (ㅛ값에 해당하는 X를 예측)
 3. seed를 input → X와 이에 해당하는 Y 를 예측 
 
 - **영향력** : 컴퓨터비젼에 새로운 신드롬을 불고 일어났다.
@@ -119,7 +119,7 @@ Loss Function을 살펴보면 **Geneartive model**은 loss function은 **minimiz
 ### 7-1. Concept
 
 1. Discriminative : Convolutional Network
-2. Generative : Upsampling Network
+2. Generative : like Upsampling but Convolution Network
 
 - _**주요 기여**_ : _**즉, latent vector 안에 각각의 image들의 여러가지 성분들이 존재하고 이를 연산으로 확인하였다.**_
 
@@ -164,7 +164,7 @@ _**즉, latent vector 안에 각각의 image들의 여러가지 성분 (눈, 코
 ### 9-1. Concept
 
 - 주요 기여도 : _**latent vector를 조절하는 것이 아니라, latent unit을 조절하여 interpreting이 가능한 모델을 만들었다.**_ → CNN이 처음에는 간단한 activation map이었지만, Deep 해질수록 점점 더 표현력이 좋은 layer로 변한 것과 같은 맥락이라고 이해하면 될 것 같다.
-- 
+
 ### 9-2. Architecture
 
 <img src="../image/10/GAN_Dissection2.PNG" width=80%>

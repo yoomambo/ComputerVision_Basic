@@ -1,7 +1,5 @@
 # ResNet
 
-------
-
 ## 1. Concept
 
 <img src="../image/05/ResNet_architecture.PNG" width = 70%>
@@ -14,7 +12,7 @@
 
 <img src="../image/05/ResNet_CNN.PNG">
 
-    plain한 CNN을 쌓으면 어떻게 될까?
+> plain한 CNN을 쌓으면 어떻게 될까?
 
 만약 Model이 깊게 쌓아서 복잡해져 Overfitting이 일어난다고 하면 Train data에 대해서는 Error가 낮아야하지만, 그림을 보면 56layer가 높은 것을 볼 수 있다.
 

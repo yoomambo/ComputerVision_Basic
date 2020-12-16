@@ -36,14 +36,16 @@
 
 실제로 parameter들을 계산해보면 위의 그림과 같다. 위의 parameter들을 계산할 때는 filter들의 channel은 input의 channel에 동일하게 맞췄다고 보면 된다.
 
-1. 1x1 : 1x1x256 (1 filter size) x 128 (filter 갯수) x28x28
+1. 1x1 : 1x1x256 (1 filter size) x 128 (filter 갯수) x28x28 (input의 숫자 갯수)
 2. 3x3 : 3x3x256 (1 filter size) x 192 (filter 갯수) x28x28
 3. 5x5 : 5x5x256 (1 filter size) x 96 (filter 갯수) x28x28
-4. Total : 854M ops
+4. Total : 854M operation
 
 굉장히 computation이 많이 드는 작업.
 
-### 2-3. BottleNeck
+--------
+
+## 3. BottleNeck
 
 <img src="../image/04/bottleneck.PNG">
 
@@ -61,10 +63,11 @@ bottleneck layer를 중간에 삽입한 architecture이다.
 4. [3x3 conv] : 3x3x256(conv filter size) x192(filter 갯수) x28x28 (output의 size)
 5. [5x5 conv] : 5x5x256(conv filter size) x96(filter 갯수) x28x28 (output의 size)
 6. [1x1 conv] : 1x1x256(conv filter size) x64(filter 갯수) x28x28 (output의 size)
+7. Total : 271M operation (여기서 28x28을 하는 이유는 weight와 input의 연산이기 때문이다.)
 
 --------
 
-## 3. Global Average Pooling
+## 4. Global Average Pooling
 
 <img src="../image/04/GoogleNet_architecture_full.PNG">
 
@@ -84,7 +87,7 @@ _**global average pooling을 사용하면 가중치가 단 1개도 필요하지 
 
 -------------
 
-## 4. Auxiliary (보조) classification
+## 5. Auxiliary (보조) classification
 
 <img src="../image/04/GoogleNet_architecture_full_2.PNG">
 
@@ -96,7 +99,7 @@ _**global average pooling을 사용하면 가중치가 단 1개도 필요하지 
 
 ------------
 
-## 5. GoogleNet의 장점
+## 6. GoogleNet의 장점
 
 1. param의 갯수를 크게 줄였다.
 2. gradient vanish 문제 해결

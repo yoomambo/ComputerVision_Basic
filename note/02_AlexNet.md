@@ -21,15 +21,17 @@ LeNet의 경우는 실제로 Convolutional Neural Network를 적용한 사례이
 - 2개의 아키텍쳐가 conv3, FC6, FC7, FC8에 서로 교차함으로써 2개의 GPU를 병렬해도 성능이 괜찮다는 것을 증명
 - Local Response Normalization : 활성화된 뉴런이 주변을 억제시키는 행동. 주변보다 엄청 활성화되어있다면 돋보일 것이고, 주변도 같이 돋보인다면 normalization을 통해 억제한다. (주변보다 엄청 활성화되어있다면 이는 classification 문제에 있어 중요한 feature를 의미)
 
-### 1-2. parameter
+### 1-2. Conv1 Parameter
 
 - input : 227 * 227 * 3
-- Filter : window : 11*11 // channel : 96
+- Filter : window : 11 * 11 * 3 // channel : 96
 - output : 55 * 55 * 96
-- parameter : 11 * 11 * 86 = 35K
+- parameter : 11 * 11 * 3 * 96 = 35K
 - bias : 96
 
-### 1-3. 과정1 : GPU 병렬분산
+> window size 만큼 filter가 96개 있기 때문에 parameter는 (window_size x channel 수)
+
+### 1-3. GPU 병렬분산
 
 <img src="../image/02/AlexNet_procedure1.PNG">
 

@@ -31,7 +31,7 @@ _**DeepLearning**_ 이 Object Detection에 적용된 이후로 성능은 급증�
 
 > window를 움직이며 classification을 진행. object들은 각각 window size가 다르며 multiple window를 가진다.
 
-### 2-2. Region Proposals
+### 2-2. Region Proposals or Region of Interest (ROI)
 
 <img src="../image/08/region_proposal.PNG">
 
@@ -71,13 +71,15 @@ superpixel은 조절가능하고 inregular한 shape이므로 Graph Neural Networ
 
 <img src="../image/08/SS_2.PNG">
 
-이 때는 greedy 알고리즘을 적용, 여러 영역들을 비교해서 가장 비슷한 영역을 고르고 이것들을 좀 더 큰 영역으로 통합하면서 object를 줄이는 작업이다. (SuperPixel을 여기서 쓸 것이다. 같은 그룹끼리 묶기)
+이 때는 greedy 알고리즘을 적용, 여러 영역들을 비교해서 가장 비슷한 영역을 고르고 이것들을 좀 더 큰 영역으로 통합하면서 object를 줄이는 작업이다. _**SuperPixel을 여기서 쓸 것이다. (같은 그룹끼리 묶기)**_
 
 아래 그림은 그 예를 보여주며, 초기에 작고 복잡했던 영역들이 **유사도**에 따라 점점 통합된다.
 
 #### 3) 통합된 영역들을 바탕으로 candidate region을 도출해낸다.
 
 <img src="../image/08/SS_output.PNG">
+
+위의 작업들을 어느 기준까지 계속 반복 작업을 한다.
 
 --------
 

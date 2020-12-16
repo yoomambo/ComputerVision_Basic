@@ -23,9 +23,16 @@ ComputerVision은 크게 4가지 틀로 구성된다.
 
 > _**즉, window를 움직여서 어떤 instance라고 정의해야하는 행위가 instance에 해당하지 않는 정보들을 폐기하는 것과 같은 것이다.**_
 
-### 1-2. Fully Connected Networks
+### 1-2. Fully Concolutional Networks
 
-> Fully Connected Networks의 경우에는 pixel마다 classification을 진행해야한다는 단점이 존재한다.
+<img src="../image/06/FCN.PNG">
+
+Fully Convolutional Layer을 구성하여 semantic segementation을 한 경우이다.
+
+Conv을 거쳐도 input size를 유지하는 이유는 Score layer에서 Classification class의 갯수 C개만큼 HxW를 만들어둬야 argmax를 거쳤을 때, _**C개의 H x W layer들을 argmax하여 Semantic 적으로 같은 Class 끼리 뭉쳐질 것이다.**_
+
+하지만 이 방법은 단점이 존재한다.
+> _**conv layer를 input size에 맞춰 하다보니, GPU에 올릴 때 숫자 size가 너무 커서 Computation expensive하다. 즉, pixel 마다 classification을 해야해서 Computation Expensive 하다.**_
 
 -----------
 
@@ -51,15 +58,6 @@ Semantic Segmentation은 직역하면 의미론적 구분이다. 우리가 compu
 -----------
 
 ## 3. Fully Convolutional Layers & Encoder-Decoder Networks
-
-<img src="../image/06/FCN.PNG">
-
-Fully Convolutional Layer을 구성하여 semantic segementation을 한 경우이다.
-
-Conv을 거쳐도 input size를 유지하는 이유는 Score layer에서 Classification class의 갯수 C개만큼 HxW를 만들어둬야 argmax를 거쳤을 때, _**C개의 H x W layer들을 argmax하여 Semantic 적으로 같은 Class 끼리 뭉쳐질 것이다.**_
-
-하지만 이 방법은 단점이 존재한다.
-> _**conv layer를 input size에 맞춰 하다보니, GPU에 올릴 때 숫자 size가 너무 커서 Computation expensive하다.**_
 
 <img src="../image/06/Encoder_Decoder.PNG">
 
